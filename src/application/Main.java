@@ -2,6 +2,7 @@ package application;
 
 import java.util.Iterator;
 
+import application.View.Header;
 import javafx.application.Application;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,18 +24,25 @@ public class Main extends Application {
 	private final double CARD_HEIGHT = 95;
 	private final double WINDOW_WIDTH = 810;
 	private final double WINDOW_HEIGHT = 500;
+
+	private static final String TITTLE="Solitarie Game";
 	Group root = new Group();
 	Deck deck = new Deck();
+	Foundation foundation=new Foundation(root);
+	Header header;
 	
 	@Override
 	public void start(Stage primaryStage) {
-		Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
-		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
-		primaryStage.setScene(scene);
-		primaryStage.setResizable(false);
-		scene.setFill(Color.GREEN);
-		createHeader();
-		createFoundations();
+
+		definition(primaryStage);
+		header.createHeader();
+
+
+
+
+
+
+
 		addResetHandButton();
 		addResetGameButton();
 		addStock();
@@ -57,6 +65,21 @@ public class Main extends Application {
 		});
 	}
 
+	public void definition(Stage primaryStage){
+		Scene scene = new Scene(root, WINDOW_WIDTH, WINDOW_HEIGHT);
+		scene.getStylesheets().add(getClass().getResource("application.css").toExternalForm());
+		primaryStage.setScene(scene);
+		primaryStage.setTitle(TITTLE);
+		primaryStage.setResizable(false);
+		foundation.createFoundations();
+		scene.setFill(Color.GREEN);
+		header=new Header(root);
+
+
+	}
+
+
+
 	private void addStock() {
 		Image cardBack = new Image("cardBack.png", CARD_WIDTH, CARD_HEIGHT, false, false);
 		ImageView backView = new ImageView(cardBack);
@@ -78,55 +101,12 @@ public class Main extends Application {
 		
 	}
 
-	private void createFoundations() {
-	
-		// create foundations
-		Rectangle foundationHeart = createCardbase(730, 50);
-		Image img = new Image("heart.png");
-		foundationHeart.setFill(new ImagePattern(img));
-		
-		Rectangle foundationDiamond = createCardbase(730, 155);
-		Image img2 = new Image("diamond.png");
-		foundationDiamond.setFill(new ImagePattern(img2));
-		
-		Rectangle foundationClub = createCardbase(730, 260);
-		Image img3 = new Image("club.png");
-		foundationClub.setFill(new ImagePattern(img3));
-		Rectangle foundationSpade = createCardbase(730, 365);
-		Image img4 = new Image("spade.png");
-		foundationSpade.setFill(new ImagePattern(img4));
 
-		root.getChildren().add(foundationHeart);
-		root.getChildren().add(foundationDiamond);
-		root.getChildren().add(foundationClub);
-		root.getChildren().add(foundationSpade);
-	}
 
-	private void createHeader() {
-		// create header
-				HBox header = new HBox(8);
-				header.setPrefWidth(810);
-				header.setPrefHeight(40);
-				header.setPadding(new Insets(10, 5, 5, 5));
-				header.setStyle("-fx-background-color: #555555;");
-				header.setAlignment(Pos.BASELINE_CENTER);
 
-				Text timeText = new Text("  00:00:00  ");
-				timeText.setFill(Color.WHITE);
-				header.getChildren().add(timeText);
-
-				Text scoreText = new Text("  Score: 0  ");
-				scoreText.setFill(Color.WHITE);
-				header.getChildren().add(scoreText);
-
-				Text movesText = new Text("  Moves:  0  ");
-				movesText.setFill(Color.WHITE);
-				header.getChildren().add(movesText);
-
-				root.getChildren().add(header);
-	}
 
 	private void startGame() {
+
 		deck.createDeck();
 		deck.shuffleDeck();
 		deck.distributeCard();
@@ -166,7 +146,8 @@ public class Main extends Application {
 	}
 
 	private void addResetHandButton() {
-		Rectangle resetButton = createCardbase(10, 50);
+		;
+		Rectangle resetButton = foundation.createCardbase(10,50);
 		Image img = new Image("icon-reset.png");
 		resetButton.setFill(new ImagePattern(img));
 		root.getChildren().add(resetButton);
@@ -198,24 +179,5 @@ public class Main extends Application {
 	}
 
 	// Function to create cardBase rectangles for demo
-	public Rectangle createCardbase(double x, double y) {
-		Rectangle r = new Rectangle(CARD_WIDTH, CARD_HEIGHT);
-		r.setX(x);
-		r.setY(y);
-		r.setFill(Color.DARKGREEN);
-		r.setStroke(Color.CORAL);
-		r.setStrokeWidth(3);
-		r.setOnMouseClicked(event -> {
-			try {
-				/*
-				 * Rectangle target = (Rectangle) event.getTarget(); if (target.getFill() ==
-				 * Color.GOLD) { target.setFill(Color.BLACK); } else {
-				 * target.setFill(Color.GOLD); }
-				 */
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		});
-		return r;
-	}
+
 }

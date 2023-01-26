@@ -23,6 +23,8 @@ public class Deck {
 			for (int j = 0; j < ranks.length; j++) {
 				String imgUrl = ranks[j].charAt(0) == '1' ? "t" + suits[i].charAt(0) + ".gif"
 						: ranks[j].charAt(0) + "" + suits[i].charAt(0) + ".gif";
+
+
 				
 				this.cards.push(new Card(suits[i], ranks[j], values[j], imgUrl));
 			}
@@ -36,9 +38,12 @@ public class Deck {
 	}
 
 	private void swapCard(int i1, int i2) {
-		Card temp = this.cards.get(i1);
-		this.cards.set(i1, this.cards.get(i2));
-		this.cards.set(i2, temp);
+
+			Card temp = this.cards.get(i1);
+			this.cards.set(i1, this.cards.get(i2));
+			this.cards.set(i2, temp);
+
+
 	}
     
 	// distribute cards into piles
