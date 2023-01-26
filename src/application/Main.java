@@ -160,6 +160,7 @@ public class Main extends Application {
 	}
 
 	private void renderWaste() {
+		//deneme
 		ImageView wasteView;
 		if(deck.waste.size() == 0) {
 			return;
